@@ -150,9 +150,77 @@ console.log(fibonacciNumber(10))
 //Write a function that sorts an array of numbers in ascending order
 //using any sorting algorithm of your choice.
 //Do not use JavaScript's built-in sorting methods (e.g., sort()).
+
+// Add in Array methods
+// push() adds at the end
+// unshift() adds at the beginning
+// splice()
+
+// // method 1 // raw method the longest
 const sortAsc = (numArray) => {
-  let newArray = new Array(...numArray)
-  // while(newArray != numArray){
-  //   newArray.forEach
-  // }
+  let newArray = []
+  numArray.forEach((item) => {
+    if (newArray.length === 0) {
+      newArray.push(item)
+    } else {
+      console.log(numArray.length)
+      for (var i = 0; i < newArray.length; i++) {
+        if (newArray.length - 1 === i && newArray[i] < item) {
+          newArray.push(item)
+          i = newArray.length
+        } else {
+          //
+          if (item === newArray[i] || item < newArray[i]) {
+            newArray.splice(i, 0, item)
+            i = newArray.length
+          }
+        }
+      }
+    }
+  })
+  return newArray
 }
+console.log(sortAsc([1, 4, 25, 34, 2, 3, 5, 7, 7]))
+
+// method 2 using for of
+const sortAsc2 = (numArray) => {
+  let newArray = []
+  let inserted = false
+
+  for (let item of numArray) {
+    for (let i = 0; i <= newArray.length; i++) {
+      if (item < newArray[i] || item === newArray[i]) {
+        newArray.splice(i, 0, item)
+        inserted = true
+        break
+      }
+    }
+    if (!inserted) {
+      newArray.push(item)
+    }
+  }
+  return newArray
+}
+console.log(sortAsc2([1, 4, 25, 34, 2, 3, 5, 7, 7]))
+
+// method 3  replacing the elements
+// -i in the second for loop is imp to optimize the code and
+// stops from repeated comparision operations.
+const sortAsc3 = (numArray) => {
+  for (let i = 0; i < numArray.length - 1; i++) {
+    for (let j = 0; j < numArray.length - 1 - i; j++) {
+      if (numArray[j] > numArray[j + 1]) {
+        let numbReplica = numArray[j]
+        numArray[j] = numArray[j + 1]
+        numArray[j + 1] = numbReplica
+      }
+    }
+  }
+  return numArray
+}
+
+console.log(sortAsc3([1, 4, 25, 34, 2, 3, 5, 7, 7]))
+
+//Object Filtering:
+//Write a function that takes an array of objects and a property name as input,
+//and returns a new array containing only the objects that have a truthy value for the specified property.
